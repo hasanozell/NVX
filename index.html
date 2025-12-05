@@ -3,28 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NVX Games</title>
-    <style>
-        body {
-            background-color: #111;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-        p { font-size: 1.2rem; color: #888; }
-    </style>
+    <title>NVX Games | Play The Future</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div>
-        <h1>NVX GAMES</h1>
-        <p>Geleceği Oyna. / Play the Future.</p>
-        <p style="font-size: 0.9rem; margin-top: 20px;">Web sitemiz yapım aşamasındadır.</p>
-    </div>
+
+    <nav class="navbar">
+        <div class="logo">NVX GAMES</div>
+        <ul class="nav-links">
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#games">Oyunlar</a></li>
+            <li><a href="#about">Hakkımızda</a></li>
+            <li><a href="#contact" class="btn-contact">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <h1>GELECEĞİ OYNA</h1>
+            <p>Sınırları zorlayan mobil oyun deneyimleri.</p>
+            <a href="#games" class="cta-button">Oyunları Keşfet</a>
+        </div>
+    </header>
+
+    <section id="games" class="games-section">
+        <h2 class="section-title">PROJELER</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-ghost"></i></div>
+                <h3>Impostor Game</h3>
+                <p>Gizemi çöz, haini bul. Yakında App Store ve Play Store'da.</p>
+            </div>
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-futbol"></i></div>
+                <h3>TeamRoulette</h3>
+                <p>Futbol takımlarını şansa bırak, eğlenceye katıl.</p>
+            </div>
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-rocket"></i></div>
+                <h3>Yeni Proje</h3>
+                <p>NVX stüdyolarında geliştirilen gizli proje.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 NVX Games. Tüm hakları saklıdır.</p>
+        <div class="socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
 </body>
 </html>
