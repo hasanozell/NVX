@@ -583,8 +583,9 @@
         let isMixedMode = false;
         let isDoubleImpostor = false;
         
+        // SON SEÇİLEN KATEGORİ HAFIZASI (Hızlı Tekrar İçin)
         let activeMainKey = "";
-        let activeSubKey = null;
+        let activeSubKey = null; // "YERLI", "YABANCI", "KARISIK" veya null
         
         // --- FONKSİYONLAR ---
         function handleEnter(e) { if(e.key === 'Enter') addPlayer(); }
@@ -718,6 +719,7 @@
             startGame(finalCatName, word);
         }
 
+        // --- YENİ FONKSİYON: AYNI KATEGORİDEN TEKRAR BAŞLAT ---
         function startSameCategoryGame() {
             const item = db[activeMainKey];
             let wordList = [];
@@ -725,15 +727,18 @@
 
             if (item.hasSub) {
                 if (activeSubKey === "KARISIK") {
+                    // Karışık modda her turda yeniden rastgele alt kategori seç
                     const subKeys = Object.keys(item.data);
                     const randomSub = subKeys[Math.floor(Math.random() * subKeys.length)];
                     wordList = item.data[randomSub];
                     displayCat += " (" + randomSub + ")";
                 } else {
+                    // Belirli alt kategori (Yerli/Yabancı)
                     wordList = item.data[activeSubKey];
                     displayCat += " (" + activeSubKey + ")";
                 }
             } else {
+                // Alt kategorisiz (Ülkeler vb.)
                 wordList = item.data;
             }
 
@@ -839,7 +844,11 @@
 
         function startNewRound() {
             if (isMixedMode) { startGlobalMixedGame(); }
-            else { startSameCategoryGame(); }
+            else { 
+                // BURASI DEĞİŞTİ: Artık kategori seçimine dönmüyor, 
+                // hafızadaki kategoriden yeni kelime veriyor.
+                startSameCategoryGame(); 
+            }
         }
         
         function resetGame() {
