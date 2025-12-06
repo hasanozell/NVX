@@ -1,424 +1,150 @@
 <!DOCTYPE html>
-<html lang="tr">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HiddenOne - NVX Games</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
         /* --- TEMEL STİLLER --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            user-select: none;
-            -webkit-user-select: none;
-            background-color: #050505;
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            user-select: none; -webkit-user-select: none;
+            background-color: #050505; color: white; font-family: 'Rajdhani', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden;
             background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+                              linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
         }
 
         .game-container {
-            width: 95%;
-            max-width: 450px;
-            text-align: center;
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 15px;
-            background: rgba(10, 10, 15, 0.95);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-            position: relative;
-            max-height: 95vh;
-            overflow-y: auto;
+            width: 95%; max-width: 450px; text-align: center;
+            border: 1px solid #333; padding: 20px; border-radius: 15px;
+            background: rgba(10, 10, 15, 0.95); box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative; max-height: 95vh; overflow-y: auto;
             transition: 0.3s;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
         }
 
-        h1 {
-            font-family: 'Orbitron';
-            color: #00f3ff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px #00f3ff;
-            font-size: 1.6rem;
-        }
-
-        h2 {
-            font-family: 'Orbitron';
-            color: white;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 8px;
-        }
-
+        h1 { font-family: 'Orbitron'; color: #00f3ff; margin-bottom: 15px; text-shadow: 0 0 10px #00f3ff; font-size: 1.6rem; }
+        h2 { font-family: 'Orbitron'; color: white; margin-bottom: 10px; font-size: 1.3rem; }
+        
+        .input-group { margin-bottom: 15px; display: flex; gap: 8px; }
         input {
-            width: 100%;
-            padding: 12px;
-            background: #111;
-            border: 1px solid #444;
-            color: white;
-            font-family: 'Orbitron';
-            text-align: center;
-            outline: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white;
+            font-family: 'Orbitron'; text-align: center; outline: none; border-radius: 8px; font-size: 1rem;
         }
-
-        input:focus {
-            border-color: #bc13fe;
-        }
-
+        input:focus { border-color: #bc13fe; }
+        
         /* BUTONLAR */
         .btn-main {
-            padding: 14px;
-            background: #00f3ff;
-            color: black;
-            border: none;
-            font-weight: bold;
-            font-family: 'Orbitron';
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.2s;
-            width: 100%;
-            margin-top: 10px;
-            font-size: 1rem;
-            touch-action: manipulation;
+            padding: 14px; background: #00f3ff; color: black; border: none; font-weight: bold;
+            font-family: 'Orbitron'; cursor: pointer; border-radius: 8px; transition: 0.2s; width: 100%; 
+            margin-top: 10px; font-size: 1rem; touch-action: manipulation; 
         }
-
-        .btn-main:active {
-            transform: scale(0.98);
-        }
-
-        .btn-next {
-            background: #bc13fe;
-            color: white;
-        }
-
-        .btn-icon {
-            width: 55px;
-            font-size: 1.2rem;
-            margin-top: 0;
-        }
-
+        .btn-main:active { transform: scale(0.98); }
+        .btn-next { background: #bc13fe; color: white; }
+        .btn-icon { width: 55px; font-size: 1.2rem; margin-top: 0; }
+        
         .btn-back-cat {
-            background: transparent;
-            border: 1px solid #555;
-            color: #aaa;
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Orbitron';
+            background: transparent; border: 1px solid #555; color: #aaa; padding: 10px;
+            margin-bottom: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-family: 'Orbitron';
         }
 
-        .player-list {
-            list-style: none;
-            margin-bottom: 15px;
-            text-align: left;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
+        .player-list { list-style: none; margin-bottom: 15px; text-align: left; max-height: 40vh; overflow-y: auto; }
         .player-list li {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 6px;
-            border-left: 3px solid #bc13fe;
-            font-size: 1.1rem;
+            background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-radius: 6px; border-left: 3px solid #bc13fe; font-size: 1.1rem;
         }
-
-        .player-list li span {
-            color: #ff0055;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
+        .player-list li span { color: #ff0055; padding: 5px 10px; cursor: pointer; }
 
         /* MODLAR */
         .mode-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 10px;
         }
-
-        .mode-label {
-            font-family: 'Orbitron';
-            color: #ccc;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 54px;
-            height: 30px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #333;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider {
-            background-color: #bc13fe;
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(24px);
-        }
+        .mode-label { font-family: 'Orbitron'; color: #ccc; font-size: 0.9rem; font-weight: bold; }
+        
+        .switch { position: relative; display: inline-block; width: 54px; height: 30px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #bc13fe; }
+        input:checked + .slider:before { transform: translateX(24px); }
 
         /* KATEGORİLER */
-        .category-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            max-height: 60vh;
-            overflow-y: auto;
-            padding-bottom: 10px;
-        }
-
+        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 60vh; overflow-y: auto; padding-bottom: 10px; }
         .btn-cat {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #00f3ff;
-            color: #00f3ff;
-            padding: 20px 5px;
-            font-family: 'Orbitron';
-            cursor: pointer;
-            transition: 0.2s;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            background: rgba(255,255,255,0.05); border: 1px solid #00f3ff; color: #00f3ff;
+            padding: 20px 5px; font-family: 'Orbitron'; cursor: pointer; transition: 0.2s; border-radius: 8px; font-size: 0.85rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
         }
-
-        .btn-cat i {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .btn-cat:active {
-            background: #00f3ff;
-            color: black;
-        }
-
-        .btn-sub {
-            border-color: #bc13fe;
-            color: #bc13fe;
-        }
-
-        .btn-sub:active {
-            background: #bc13fe;
-            color: white;
-        }
+        .btn-cat i { font-size: 1.5rem; margin-bottom: 5px; }
+        .btn-cat:active { background: #00f3ff; color: black; }
+        .btn-sub { border-color: #bc13fe; color: #bc13fe; }
+        .btn-sub:active { background: #bc13fe; color: white; }
 
         /* KART */
-        .card-scene {
-            perspective: 1000px;
-            height: 240px;
-            margin: 15px 0;
-            display: block;
-            width: 100%;
-        }
-
-        .card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-        }
-
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
-
+        .card-scene { perspective: 1000px; height: 240px; margin: 15px 0; display: block; width: 100%; }
+        .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+        .card.flipped { transform: rotateY(180deg); }
         .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            border: 2px solid #333;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 12px; border: 2px solid #333;
             background-size: cover;
         }
+        .card-front { background: #111; border-color: #00f3ff; }
+        .card-back { background: #000; border-color: #bc13fe; transform: rotateY(180deg); }
 
-        .card-front {
-            background: #111;
-            border-color: #00f3ff;
-        }
+        .role-text { font-size: 1.8rem; font-family: 'Orbitron'; font-weight: bold; margin-top: 10px; word-break: break-word; padding: 0 10px; }
+        .impostor { color: #ff0055; text-shadow: 0 0 15px #ff0055; }
+        .crew { color: #00f3ff; text-shadow: 0 0 15px #00f3ff; }
 
-        .card-back {
-            background: #000;
-            border-color: #bc13fe;
-            transform: rotateY(180deg);
-        }
-
-        .role-text {
-            font-size: 1.8rem;
-            font-family: 'Orbitron';
-            font-weight: bold;
-            margin-top: 10px;
-            word-break: break-word;
-            padding: 0 10px;
-        }
-
-        .impostor {
-            color: #ff0055;
-            text-shadow: 0 0 15px #ff0055;
-        }
-
-        .crew {
-            color: #00f3ff;
-            text-shadow: 0 0 15px #00f3ff;
-        }
-
-        .vote-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
+        .vote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 50vh; overflow-y: auto; }
         .btn-vote {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #bc13fe;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Rajdhani';
-            font-size: 1.1rem;
+            background: rgba(255,255,255,0.05); border: 1px solid #bc13fe; color: white;
+            padding: 15px; border-radius: 8px; cursor: pointer; font-family: 'Rajdhani'; font-size: 1.1rem;
             transition: 0.2s;
         }
+        .btn-vote:active { background: #bc13fe; color: black; }
 
-        .btn-vote:active {
-            background: #bc13fe;
-            color: black;
-        }
-
-        .scoreboard {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 0.9rem;
-        }
-
-        .scoreboard th,
-        .scoreboard td {
-            padding: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .scoreboard th {
-            color: #00f3ff;
-            font-family: 'Orbitron';
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .scoreboard { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+        .scoreboard th, .scoreboard td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .scoreboard th { color: #00f3ff; font-family: 'Orbitron'; }
+        
+        .hidden { display: none !important; }
 
         @media (max-height: 600px) {
-            h1 {
-                font-size: 1.4rem;
-                margin-bottom: 10px;
-            }
-
-            .card-scene {
-                height: 180px;
-            }
-
-            .role-text {
-                font-size: 1.5rem;
-            }
+            h1 { font-size: 1.4rem; margin-bottom: 10px; }
+            .card-scene { height: 180px; }
+            .role-text { font-size: 1.5rem; }
         }
     </style>
 </head>
-
 <body>
 
     <div class="game-container" id="screen-setup">
-        <h1><i class="fas fa-users"></i> EKİBİ KUR</h1>
+        <h1><i class="fas fa-users"></i> EKIBI KUR</h1>
         <div class="input-group">
-            <input type="text" id="playerName" placeholder="OYUNCU ADI" onkeypress="handleEnter(event)"
-                autocomplete="off">
+            <input type="text" id="playerName" placeholder="OYUNCU ADI" onkeypress="handleEnter(event)" autocomplete="off">
             <button onclick="addPlayer()" class="btn-main btn-icon"><i class="fas fa-plus"></i></button>
         </div>
         <ul class="player-list" id="playerList"></ul>
-        <button onclick="toModesScreen()" id="btnContinue" class="btn-main"
-            style="opacity: 0.5; pointer-events: none;">DEVAM ET <i class="fas fa-arrow-right"></i></button>
+        <button onclick="toModesScreen()" id="btnContinue" class="btn-main" style="opacity: 0.5; pointer-events: none;">DEVAM ET <i class="fas fa-arrow-right"></i></button>
     </div>
 
     <div class="game-container hidden" id="screen-modes">
         <h1><i class="fas fa-cogs"></i> MODLAR</h1>
         <div class="mode-item">
             <div style="text-align:left;">
-                <span class="mode-label">KARIŞIK MOD</span>
-                <div style="font-size:0.75rem; color:#888;">Tüm kategorilerden rastgele.</div>
+                <span class="mode-label">KARISIK MOD</span>
+                <div style="font-size:0.75rem; color:#888;">Tum kategorilerden rastgele.</div>
             </div>
             <label class="switch">
                 <input type="checkbox" id="modeMixed" onchange="checkModeStatus()">
@@ -427,64 +153,63 @@
         </div>
         <div class="mode-item">
             <div style="text-align:left;">
-                <span class="mode-label">ÇİFT AJAN</span>
-                <div style="font-size:0.75rem; color:#888;">2 Impostor (5+ Kişi).</div>
+                <span class="mode-label">CIFT AJAN</span>
+                <div style="font-size:0.75rem; color:#888;">2 Impostor (5+ Kisi).</div>
             </div>
             <label class="switch">
                 <input type="checkbox" id="modeDouble" disabled>
                 <span class="slider"></span>
             </label>
         </div>
-        <button onclick="processModes()" id="btnStartMode" class="btn-main">KATEGORİ SEÇ</button>
+        <button onclick="processModes()" id="btnStartMode" class="btn-main">KATEGORI SEC</button>
     </div>
 
     <div class="game-container hidden" id="screen-category">
-        <h1>KATEGORİLER</h1>
+        <h1>KATEGORILER</h1>
         <div class="category-grid" id="categoryMainGrid"></div>
     </div>
 
     <div class="game-container hidden" id="screen-subcategory">
-        <button class="btn-back-cat" onclick="toCategoryScreen()"><i class="fas fa-arrow-left"></i> GERİ DÖN</button>
+        <button class="btn-back-cat" onclick="toCategoryScreen()"><i class="fas fa-arrow-left"></i> GERI DON</button>
         <h1 id="subCatTitle">FUTBOL</h1>
         <div class="category-grid" id="categorySubGrid"></div>
     </div>
 
     <div class="game-container hidden" id="screen-game">
-        <h2 id="turnInfo">SIRA: ALİ</h2>
-        <p style="color:#aaa; font-size:0.9rem;">Cihazı sıradaki oyuncuya verin.</p>
+        <h2 id="turnInfo">SIRA: ALI</h2>
+        <p style="color:#aaa; font-size:0.9rem;">Cihazi siradaki oyuncuya verin.</p>
         <div class="card-scene">
             <div class="card" id="cardInner">
                 <div class="card-face card-front">
                     <i class="fas fa-fingerprint" style="font-size: 3.5rem; color: #555;"></i>
-                    <p style="margin-top: 15px; color: #aaa; font-weight: bold;">GİZLİ</p>
+                    <p style="margin-top: 15px; color: #aaa; font-weight: bold;">GIZLI</p>
                 </div>
                 <div class="card-face card-back">
                     <i id="roleIcon" class="fas fa-user-astronaut" style="font-size: 3.5rem;"></i>
-                    <div id="secretWord" class="role-text">KELİME</div>
+                    <div id="secretWord" class="role-text">KELIME</div>
                     <p id="roleDesc" style="margin-top: 10px; font-size: 0.8rem; color: #aaa; padding:0 20px;">...</p>
                 </div>
             </div>
         </div>
-        <button id="actionBtn" class="btn-main" onclick="revealRole()">ROLÜ GÖR</button>
+        <button id="actionBtn" class="btn-main" onclick="revealRole()">ROLU GOR</button>
     </div>
 
     <div class="game-container hidden" id="screen-discuss">
-        <h1 style="color: #bc13fe;">TARTIŞMA!</h1>
+        <h1 style="color: #bc13fe;">TARTISMA!</h1>
         <i class="fas fa-comments" style="font-size: 4rem; color: white; margin: 20px 0;"></i>
         <p style="font-size: 1.1rem; line-height: 1.4;"><b>IMPOSTOR</b>'u bulun!</p>
-        <button onclick="toVoteScreen()" class="btn-main"
-            style="margin-top: 20px; background: #bc13fe; color:white;">OYLAMAYA GEÇ</button>
+        <button onclick="toVoteScreen()" class="btn-main" style="margin-top: 20px; background: #bc13fe; color:white;">OYLAMAYA GEC</button>
     </div>
 
     <div class="game-container hidden" id="screen-vote">
-        <h2 style="color: #ff0055;">KİMİ ASIYORUZ?</h2>
-        <p style="margin-bottom: 15px; color:#aaa; font-size:0.9rem;">Şüphelendiğiniz kişiye dokunun.</p>
+        <h2 style="color: #ff0055;">KIMI ASIYORUZ?</h2>
+        <p style="margin-bottom: 15px; color:#aaa; font-size:0.9rem;">Suphelendiginiz kisiye dokunun.</p>
         <div class="vote-grid" id="voteGrid"></div>
     </div>
 
     <div class="game-container hidden" id="screen-result">
-        <h1 id="resultTitle">SONUÇ</h1>
-        <p id="resultDesc" style="margin-bottom: 15px; font-size:0.9rem; line-height:1.4;">Açıklama</p>
+        <h1 id="resultTitle">SONUC</h1>
+        <p id="resultDesc" style="margin-bottom: 15px; font-size:0.9rem; line-height:1.4;">Aciklama</p>
         <table class="scoreboard">
             <thead>
                 <tr>
@@ -495,9 +220,8 @@
             <tbody id="scoreTableBody"></tbody>
         </table>
         <div style="display: flex; gap: 10px; margin-top: 15px; width:100%;">
-            <button onclick="startNewRound()" class="btn-main" style="background: #00f3ff;">YENİ TUR</button>
-            <button onclick="resetGame()" class="btn-main"
-                style="background: #222; color: #aaa; border: 1px solid #444;">ÇIKIŞ</button>
+            <button onclick="startNewRound()" class="btn-main" style="background: #00f3ff;">YENI TUR</button>
+            <button onclick="resetGame()" class="btn-main" style="background: #222; color: #aaa; border: 1px solid #444;">CIKIS</button>
         </div>
     </div>
 
@@ -853,14 +577,17 @@
         let players = [];
         let scores = {};
         let currentWord = "";
-        let currentCategoryName = "";
+        let currentCategoryName = ""; 
         let impostorIndices = [];
         let turnIndex = 0;
         let isMixedMode = false;
         let isDoubleImpostor = false;
-
+        
+        let activeMainKey = "";
+        let activeSubKey = null;
+        
         // --- FONKSİYONLAR ---
-        function handleEnter(e) { if (e.key === 'Enter') addPlayer(); }
+        function handleEnter(e) { if(e.key === 'Enter') addPlayer(); }
 
         function addPlayer() {
             const input = document.getElementById('playerName');
@@ -888,10 +615,10 @@
                 list.innerHTML += `<li>${p} <span onclick="removePlayer(${i})"><i class="fas fa-times"></i></span></li>`;
             });
             const btn = document.getElementById('btnContinue');
-            if (players.length >= 3) { btn.style.opacity = '1'; btn.style.pointerEvents = 'all'; }
+            if(players.length >= 3) { btn.style.opacity = '1'; btn.style.pointerEvents = 'all'; } 
             else { btn.style.opacity = '0.5'; btn.style.pointerEvents = 'none'; }
             const doubleSwitch = document.getElementById('modeDouble');
-            if (players.length >= 5) { doubleSwitch.disabled = false; }
+            if(players.length >= 5) { doubleSwitch.disabled = false; } 
             else { doubleSwitch.disabled = true; doubleSwitch.checked = false; }
         }
 
@@ -905,8 +632,8 @@
         function checkModeStatus() {
             const mixed = document.getElementById('modeMixed').checked;
             const btn = document.getElementById('btnStartMode');
-            if (mixed) { btn.innerText = "OYUNA BAŞLA"; btn.style.background = "#bc13fe"; btn.style.color = "white"; }
-            else { btn.innerText = "KATEGORİ SEÇ"; btn.style.background = "#00f3ff"; btn.style.color = "black"; }
+            if (mixed) { btn.innerText = "OYUNA BASLA"; btn.style.background = "#bc13fe"; btn.style.color = "white"; } 
+            else { btn.innerText = "KATEGORI SEC"; btn.style.background = "#00f3ff"; btn.style.color = "black"; }
         }
 
         function processModes() {
@@ -923,12 +650,13 @@
                 const btn = document.createElement('button');
                 btn.className = 'btn-cat';
                 btn.innerHTML = `<i class="${item.icon}"></i> ${key}`;
-                if (item.hasSub) { btn.onclick = () => renderSubCategories(key); }
-                else {
+                if (item.hasSub) { 
+                    btn.onclick = () => renderSubCategories(key); 
+                } else { 
                     btn.onclick = () => {
-                        const wordList = item.data;
-                        const word = wordList[Math.floor(Math.random() * wordList.length)];
-                        startGame(key, word);
+                        activeMainKey = key;
+                        activeSubKey = null;
+                        startSameCategoryGame();
                     };
                 }
                 grid.appendChild(btn);
@@ -945,24 +673,22 @@
 
             const btnMix = document.createElement('button');
             btnMix.className = 'btn-cat btn-sub';
-            btnMix.innerHTML = '<i class="fas fa-random"></i> KARIŞIK';
+            btnMix.innerHTML = '<i class="fas fa-random"></i> KARISIK';
             btnMix.onclick = () => {
-                const subKeys = Object.keys(subData);
-                const randomSub = subKeys[Math.floor(Math.random() * subKeys.length)];
-                const wordList = subData[randomSub];
-                const word = wordList[Math.floor(Math.random() * wordList.length)];
-                startGame(mainKey + " (" + randomSub + ")", word);
+                activeMainKey = mainKey;
+                activeSubKey = "KARISIK";
+                startSameCategoryGame();
             };
             grid.appendChild(btnMix);
 
             Object.keys(subData).forEach(subKey => {
                 const btn = document.createElement('button');
                 btn.className = 'btn-cat btn-sub';
-                btn.innerHTML = subKey === "YERLİ" ? '<i class="fas fa-flag"></i> YERLİ' : '<i class="fas fa-globe"></i> YABANCI';
+                btn.innerHTML = subKey === "YERLI" ? '<i class="fas fa-flag"></i> YERLI' : '<i class="fas fa-globe"></i> YABANCI';
                 btn.onclick = () => {
-                    const wordList = subData[subKey];
-                    const word = wordList[Math.floor(Math.random() * wordList.length)];
-                    startGame(mainKey + " (" + subKey + ")", word);
+                    activeMainKey = mainKey;
+                    activeSubKey = subKey;
+                    startSameCategoryGame();
                 };
                 grid.appendChild(btn);
             });
@@ -980,7 +706,7 @@
             let finalCatName = randomKey;
 
             if (item.hasSub) {
-                const subKeys = Object.keys(item.data);
+                const subKeys = Object.keys(item.data); 
                 const randomSub = subKeys[Math.floor(Math.random() * subKeys.length)];
                 const wordList = item.data[randomSub];
                 word = wordList[Math.floor(Math.random() * wordList.length)];
@@ -992,25 +718,48 @@
             startGame(finalCatName, word);
         }
 
+        function startSameCategoryGame() {
+            const item = db[activeMainKey];
+            let wordList = [];
+            let displayCat = activeMainKey;
+
+            if (item.hasSub) {
+                if (activeSubKey === "KARISIK") {
+                    const subKeys = Object.keys(item.data);
+                    const randomSub = subKeys[Math.floor(Math.random() * subKeys.length)];
+                    wordList = item.data[randomSub];
+                    displayCat += " (" + randomSub + ")";
+                } else {
+                    wordList = item.data[activeSubKey];
+                    displayCat += " (" + activeSubKey + ")";
+                }
+            } else {
+                wordList = item.data;
+            }
+
+            const word = wordList[Math.floor(Math.random() * wordList.length)];
+            startGame(displayCat, word);
+        }
+
         function startGame(catName, word) {
             currentCategoryName = catName;
             currentWord = word;
             impostorIndices = [];
             let impostorCount = isDoubleImpostor ? 2 : 1;
-            while (impostorIndices.length < impostorCount) {
+            while(impostorIndices.length < impostorCount) {
                 let r = Math.floor(Math.random() * players.length);
-                if (!impostorIndices.includes(r)) impostorIndices.push(r);
+                if(!impostorIndices.includes(r)) impostorIndices.push(r);
             }
             turnIndex = 0;
             showTurnScreen();
         }
 
         function showTurnScreen() {
-            if (turnIndex >= players.length) { showScreen('screen-discuss'); return; }
+            if(turnIndex >= players.length) { showScreen('screen-discuss'); return; }
             document.getElementById('cardInner').classList.remove('flipped');
             document.getElementById('turnInfo').innerText = `SIRA: ${players[turnIndex]}`;
             const btn = document.getElementById('actionBtn');
-            btn.innerText = "ROLÜ GÖR"; btn.classList.remove('btn-next'); btn.onclick = revealRole;
+            btn.innerText = "ROLU GOR"; btn.classList.remove('btn-next'); btn.onclick = revealRole;
             showScreen('screen-game');
         }
 
@@ -1024,7 +773,7 @@
                 secretText.className = "role-text impostor";
                 roleIcon.className = "fas fa-user-secret impostor";
                 roleIcon.style.color = "#ff0055";
-                roleDesc.innerHTML = `Gizli kelimeyi bilmiyorsun.<br>İpucu Kategori: <b style="color:#fff">${currentCategoryName}</b>`;
+                roleDesc.innerHTML = `Gizli kelimeyi bilmiyorsun.<br>Ipucu Kategori: <b style="color:#fff">${currentCategoryName}</b>`;
             } else {
                 secretText.innerText = currentWord;
                 secretText.className = "role-text crew";
@@ -1035,7 +784,7 @@
 
             document.getElementById('cardInner').classList.add('flipped');
             const btn = document.getElementById('actionBtn');
-            btn.innerText = "SIRADAKİNE GEÇ"; btn.classList.add('btn-next'); btn.onclick = passTurn;
+            btn.innerText = "SIRADAKINE GEC"; btn.classList.add('btn-next'); btn.onclick = passTurn;
         }
 
         function passTurn() {
@@ -1059,7 +808,7 @@
         function submitVote(votedIndex) {
             let title = "", desc = "";
             if (impostorIndices.includes(votedIndex)) {
-                title = "EKİP KAZANDI!";
+                title = "EKIP KAZANDI!";
                 let impostorNames = impostorIndices.map(i => players[i]).join(" & ");
                 desc = `Yakalanan Impostor: <b>${players[votedIndex]}</b>.<br>Tam Liste: ${impostorNames}`;
                 document.getElementById('resultTitle').style.color = "#00f3ff";
@@ -1067,7 +816,7 @@
             } else {
                 title = "IMPOSTOR KAZANDI!";
                 let impostorNames = impostorIndices.map(i => players[i]).join(" & ");
-                desc = `Yanlış tahmin! Impostorlar: <b>${impostorNames}</b> idi.`;
+                desc = `Yanlis tahmin! Impostorlar: <b>${impostorNames}</b> idi.`;
                 document.getElementById('resultTitle').style.color = "#ff0055";
                 impostorIndices.forEach(i => { scores[players[i]] += 1; });
             }
@@ -1080,7 +829,7 @@
         function updateScoreboard() {
             const tbody = document.getElementById('scoreTableBody');
             tbody.innerHTML = '';
-            const sortedPlayers = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+            const sortedPlayers = Object.keys(scores).sort((a,b) => scores[b] - scores[a]);
             sortedPlayers.forEach(p => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${p}</td><td>${scores[p]}</td>`;
@@ -1090,14 +839,13 @@
 
         function startNewRound() {
             if (isMixedMode) { startGlobalMixedGame(); }
-            else { toCategoryScreen(); }
+            else { startSameCategoryGame(); }
         }
-
+        
         function resetGame() {
             Object.keys(scores).forEach(key => scores[key] = 0);
             showScreen('screen-setup');
         }
     </script>
 </body>
-
 </html>
