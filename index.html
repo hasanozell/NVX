@@ -1,62 +1,177 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NVX Games | Play The Future</title>
+    <title>NVX Games | Play the Future</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
 
-    <nav class="navbar">
-        <div class="logo">NVX GAMES</div>
-        <ul class="nav-links">
-            <li><a href="#home">Ana Sayfa</a></li>
-            <li><a href="#games">Oyunlar</a></li>
-            <li><a href="#about">Hakkımızda</a></li>
-            <li><a href="#contact" class="btn-contact">İletişim</a></li>
-        </ul>
-    </nav>
-
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <h1>GELECEĞİ OYNA</h1>
-            <p>Sınırları zorlayan mobil oyun deneyimleri.</p>
-            <a href="#games" class="cta-button">Oyunları Keşfet</a>
+    <div id="preloader">
+        <div class="cyber-grid"></div>
+        <div class="cyber-grid-overlay"></div>
+        <div class="loader-container">
+            <div class="loader-ring"></div>
+            <img src="Resimler/NVXGames.jpg" alt="NVX Logo" class="preloader-logo">
         </div>
+    </div>
+
+    <canvas id="space-canvas"></canvas>
+
+    <header>
+        <div class="logo">NVX <span>GAMES</span></div>
+
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#hero" onclick="closeMobileMenu()">Ana Sayfa</a></li>
+                <li><a href="#games" onclick="closeMobileMenu()">Oyunlar</a></li>
+                <li><a href="#about" onclick="closeMobileMenu()">Biz Kimiz?</a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()">İletisim</a></li>
+            </ul>
+        </nav>
+
+        <button class="btn-login desktop-only"><i class="fas fa-user"></i> GİRİS</button>
     </header>
 
+    <section id="hero" class="hero">
+        <h1>TARAYICINDA<br>SINIRSIZ EGLENCE</h1>
+        <p>İndirme yok. Bekleme yok. Tıkla ve hemen oyna.</p>
+        <a href="#games" class="btn-play-hero"><i class="fas fa-play"></i> OYNAMAYA BASLA</a>
+    </section>
+
     <section id="games" class="games-section">
-        <h2 class="section-title">PROJELER</h2>
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-gamepad"></i> POPÜLER OYUNLAR</h2>
+        </div>
+
         <div class="games-grid">
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-ghost"></i></div>
-                <h3>Impostor Game</h3>
-                <p>Gizemi çöz, haini bul. Yakında App Store ve Play Store'da.</p>
+            <div class="game-card" onclick="openGame('HiddenOne')">
+                <div class="game-thumb">
+                    <img src="Resimler/HiddenOne.jpg" alt="HiddenOne Cover" class="game-cover-img">
+                    <div class="play-overlay"><span class="btn-play-now">OYNA</span></div>
+                </div>
+                <div class="game-info">
+                    <span class="game-genre">Sosyal / Strateji</span>
+                    <h3 class="game-title">HiddenOne: İmpostor Kim? </h3>
+                    <div class="game-stats"><span><i class="fas fa-users"></i></span><span><i class="fas fa-star"
+                                style="color: gold;"></i></span></div>
+                </div>
             </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-futbol"></i></div>
-                <h3>TeamRoulette</h3>
-                <p>Futbol takımlarını şansa bırak, eğlenceye katıl.</p>
+
+            <div class="game-card" onclick="openGame('TeamRoulette')">
+                <div class="game-thumb">
+                    <i class="fas fa-futbol"></i>
+                    <div class="play-overlay"><span class="btn-play-now">OYNA</span></div>
+                </div>
+                <div class="game-info">
+                    <span class="game-genre">Spor / Araç</span>
+                    <h3 class="game-title">TeamRoulette</h3>
+                    <div class="game-stats"><span><i class="fas fa-bolt"></i> Hızlı</span><span>4.5 <i
+                                class="fas fa-star" style="color: gold;"></i></span></div>
+                </div>
             </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-rocket"></i></div>
-                <h3>Yeni Proje</h3>
-                <p>NVX stüdyolarında geliştirilen gizli proje.</p>
+
+            <div class="game-card" onclick="openGame('MissionRed')">
+                <div class="game-thumb">
+                    <i class="fas fa-rocket"></i>
+                    <div class="play-overlay"><span class="btn-play-now">OYNA</span></div>
+                </div>
+                <div class="game-info">
+                    <span class="game-genre">Simülasyon</span>
+                    <h3 class="game-title">Mission: Red</h3>
+                    <div class="game-stats"><span><i class="fas fa-clock"></i> Yeni</span><span>-- <i
+                                class="fas fa-star"></i></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-users"></i> BİZ KİMİZ?</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Gelecegi Kodluyoruz.</h3>
+                <p>2025 yılında kurulan NVX Games, yeni nesil teknolojileri yaratıcı fikirlerle harmanlayan
+                    bağımsız bir oyun stüdyosudur. Web tabanlı arcade oyunlardan, derin strateji simülasyonlarına
+                    kadar geniş bir yelpazede projeler üretiyoruz.</p>
+                <p> Amacımız, Türkiye'den dünyaya açılan,
+                    kalitesiyle konuşulan global bir marka olmak.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-box">
+                    <span class="stat-num">1+</span>
+                    <span class="stat-label">Oyun</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">100</span>
+                    <span class="stat-label">Oyuncu</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-envelope"></i> BİZE ULASIN</h2>
+        </div>
+        <div class="contact-container">
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Mesajınız gönderildi!');">
+                <input type="text" placeholder="Adınız" required>
+                <input type="email" placeholder="E-posta Adresiniz" required>
+                <textarea placeholder="Mesajınız..." rows="5" required></textarea>
+                <button type="submit" class="btn-submit">GÖNDER</button>
+            </form>
+            <div class="contact-info">
+                <div class="info-item"><i class="fas fa-map-marker-alt"></i> Afyonkarahisar / Türkiye</div>
+                <div class="info-item"><i class="fas fa-envelope"></i> contact@nvxgames.com</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 NVX Games. Tüm hakları saklıdır.</p>
-        <div class="socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+        <div class="footer-content">
+            <div class="logo-small">NVX <span>GAMES</span></div>
+            <p>&copy; 2025 NVX Games Studio. Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
 
+    <div id="game-modal">
+        <button class="btn-back" onclick="closeGame()">
+            <i class="fas fa-arrow-left"></i> GERİ DÖN
+        </button>
+
+        <div class="modal-content">
+            <div id="game-loading-screen">
+                <img id="loading-game-logo" src="Resimler/HiddenOne.jpg" alt="Game Logo" class="modal-logo-anim">
+                <div class="modal-loader-bar">
+                    <div class="modal-loader-progress"></div>
+                </div>
+                <div class="loading-text small">OYUN YÜKLENİYOR...</div>
+            </div>
+
+            <iframe id="game-frame" src="" style="width: 100%; height: 100%; border: none; display: none;"></iframe>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,175 +1,273 @@
-/* GENEL AYARLAR */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* --- 1. TEMEL AYARLAR & DEĞİŞKENLER --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-deep: #020204;
+    --nvx-cyan: #00f3ff;
+    --nvx-purple: #bc13fe;
+    --glass: rgba(20, 20, 30, 0.6);
+    --text-white: #fff;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #0a0a0a; /* Koyu siyah arka plan */
-    color: #ffffff;
-    line-height: 1.6;
-}
-
-/* MENÜ TASARIMI */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: rgba(0, 0, 0, 0.9);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid #333;
-}
-
-.logo {
-    font-family: 'Orbitron', sans-serif; /* Fütüristik font */
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00d2ff; /* Neon mavisi */
-    letter-spacing: 2px;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #00d2ff;
-}
-
-.btn-contact {
-    background-color: #00d2ff;
-    color: black !important;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-/* HERO (GİRİŞ) BÖLÜMÜ */
-.hero {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text-white);
+    overflow-x: hidden;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80');
-    background-size: cover;
-    background-position: center;
+    overflow: hidden; /* Yükleme sırasında kilitli */
 }
 
-.hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 4rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
+body.loaded { overflow-y: auto; }
+body.modal-open { overflow: hidden; }
+
+/* --- 2. SİTE AÇILIŞ PRELOADER (Profesyonel Neon Logo) --- */
+#preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    /* Derin Uzay Arka Planı */
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    z-index: 99999; display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease; 
+    overflow: hidden; perspective: 600px;
 }
 
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color: #ccc;
+/* 3D Zemin Efekti (Aynen koruyoruz, derinlik katıyor) */
+.cyber-grid {
+    position: absolute; top: 0; left: -50%; width: 200%; height: 200%;
+    background-image: linear-gradient(rgba(0, 243, 255, 0.15) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(188, 19, 254, 0.15) 1px, transparent 1px);
+    background-size: 80px 80px; transform-origin: top center;
+    transform: rotateX(60deg) translateY(-100px);
+    animation: gridFly 2s linear infinite; z-index: 1;
+    box-shadow: 0 0 100px rgba(0, 243, 255, 0.1);
 }
 
-.cta-button {
-    text-decoration: none;
-    background-color: transparent;
-    border: 2px solid #00d2ff;
-    color: #00d2ff;
-    padding: 10px 30px;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: 0.3s;
+.cyber-grid-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Zeminin ufukta kaybolması için maske */
+    background: linear-gradient(to bottom, rgba(9, 10, 15, 1) 0%, rgba(9, 10, 15, 0.8) 40%, rgba(188, 19, 254, 0.05) 100%);
+    z-index: 2;
 }
 
-.cta-button:hover {
-    background-color: #00d2ff;
-    color: black;
-    box-shadow: 0 0 15px #00d2ff; /* Neon parlama efekti */
+@keyframes gridFly { 0% { transform: rotateX(60deg) translateY(0); } 100% { transform: rotateX(60deg) translateY(80px); } }
+
+.hide-preloader { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* LOGO KONTEYNERİ */
+.loader-container {
+    position: relative; width: 220px; height: 220px; 
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10;
+    /* Logonun arkasına hafif bir ortam ışığı (Ambient Light) */
+    background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
 }
 
-/* OYUNLAR BÖLÜMÜ */
-.games-section {
-    padding: 80px 50px;
-    text-align: center;
+/* --- ANA LOGO AYARLARI --- */
+.preloader-logo {
+    width: 140px; /* Boyutu ideal, logona göre artırabilirsin */
+    height: auto;
+    z-index: 12;
+    object-fit: contain;
+    
+    /* İŞTE SİHİR BURADA: Çift Katmanlı Neon Parlaması */
+    /* 1. Katman: Keskin Mavi (Cyan) Çerçeve */
+    /* 2. Katman: Geniş Mor (Purple) Yayılım */
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.8)) 
+            drop-shadow(0 0 25px rgba(188, 19, 254, 0.5));
+            
+    /* Nefes alma animasyonu */
+    animation: mainLogoBreathe 3s infinite ease-in-out;
 }
 
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    color: #00d2ff;
+/* Logonun Nefes Alma Animasyonu */
+@keyframes mainLogoBreathe {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.8)) 
+                drop-shadow(0 0 25px rgba(188, 19, 254, 0.5));
+    }
+    50% {
+        transform: scale(1.05); /* Hafifçe büyüsün */
+        /* Parlama şiddetlensin ve parlaklığı artsın */
+        filter: drop-shadow(0 0 15px rgba(0, 243, 255, 1)) 
+                drop-shadow(0 0 40px rgba(188, 19, 254, 0.8))
+                brightness(1.1);
+    }
 }
 
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+/* Etraftaki Dönen Halka */
+.loader-ring {
+    position: absolute; width: 100%; height: 100%; border-radius: 50%;
+    border: 2px solid transparent; 
+    border-top-color: var(--nvx-cyan); 
+    border-bottom-color: var(--nvx-purple);
+    
+    /* Halkanın parlaması */
+    box-shadow: 0 0 30px var(--nvx-cyan), inset 0 0 20px rgba(188, 19, 254, 0.2);
+    
+    animation: spinRing 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    
+    /* Halkanın içi çok hafif buzlu cam olsun */
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(3px);
 }
 
-.game-card {
-    background-color: #1a1a1a;
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid #333;
-    transition: transform 0.3s;
+/* --- 3. DİĞER BÖLÜMLER --- */
+#space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+header {
+    position: fixed; top: 0; width: 100%; padding: 15px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.game-card:hover {
-    transform: translateY(-10px); /* Üzerine gelince yukarı kalkar */
-    border-color: #00d2ff;
-}
+.logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 10px var(--nvx-cyan); }
+.logo span { color: var(--nvx-cyan); }
 
-.game-icon {
-    font-size: 3rem;
-    color: #00d2ff;
-    margin-bottom: 20px;
-}
+.nav-menu ul { display: flex; gap: 30px; list-style: none; }
+.nav-menu a { text-decoration: none; color: #aaa; font-family: 'Orbitron'; font-size: 0.9rem; font-weight: 600; transition: 0.3s; }
+.nav-menu a:hover { color: var(--nvx-cyan); text-shadow: 0 0 10px var(--nvx-cyan); }
 
-.game-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
+.hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: white; }
+.btn-login { border: 1px solid var(--nvx-purple); color: var(--nvx-purple); padding: 8px 20px; font-weight: bold; background: transparent; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+.btn-login:hover { background: var(--nvx-purple); color: white; box-shadow: 0 0 15px var(--nvx-purple); }
 
-.game-card p {
-    color: #aaa;
-}
+.hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.hero h1 { font-family: 'Orbitron'; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; background: linear-gradient(to right, #fff, var(--nvx-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 1.2rem; color: #aaa; max-width: 600px; margin-bottom: 2rem; }
+.btn-play-hero { padding: 15px 50px; font-size: 1.2rem; font-weight: bold; background: var(--nvx-cyan); color: #000; border: none; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); cursor: pointer; transition: 0.3s; font-family: 'Orbitron'; text-decoration: none; display: inline-block; }
+.btn-play-hero:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--nvx-cyan); background: white; }
+
+section { padding: 80px 10%; position: relative; z-index: 2; }
+.section-header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+.section-title { font-family: 'Orbitron'; font-size: 2rem; color: white; }
+.section-title i { color: var(--nvx-purple); margin-right: 10px; }
+
+/* OYUN KARTLARI */
+.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+.game-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; transition: 0.4s; position: relative; cursor: pointer; }
+.game-card:hover { transform: translateY(-10px); border-color: var(--nvx-cyan); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.15); }
+
+.game-thumb { height: 180px; width: 100%; background-color: #111; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+/* Resim Ayarları */
+.game-cover-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.game-card:hover .game-cover-img { transform: scale(1.1); }
+.game-thumb i { font-size: 4rem; color: #333; transition: 0.4s; z-index: 1; }
+
+.play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; z-index: 2; }
+.game-card:hover .play-overlay { opacity: 1; }
+.btn-play-now { background: var(--nvx-cyan); color: #000; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; transform: scale(0.8); transition: 0.3s; }
+.game-card:hover .btn-play-now { transform: scale(1); }
+
+.game-info { padding: 20px; }
+.game-title { font-size: 1.2rem; font-weight: 700; color: white; }
+.game-genre { font-size: 0.8rem; color: var(--nvx-cyan); text-transform: uppercase; margin-bottom: 5px; display: block; }
+.game-stats { font-size: 0.8rem; color: #777; margin-top: 10px; display: flex; justify-content: space-between; }
+
+/* BİZ KİMİZ */
+.about-content { display: flex; gap: 40px; align-items: center; }
+.about-text { flex: 2; font-size: 1.1rem; color: #ccc; line-height: 1.8; }
+.about-text h3 { color: var(--nvx-cyan); font-family: 'Orbitron'; margin-bottom: 15px; }
+.about-stats { flex: 1; display: flex; gap: 20px; }
+.stat-box { background: rgba(188, 19, 254, 0.1); border: 1px solid var(--nvx-purple); padding: 20px; text-align: center; border-radius: 10px; flex: 1; }
+.stat-num { display: block; font-size: 2.5rem; font-weight: bold; color: var(--nvx-purple); font-family: 'Orbitron'; }
+.stat-label { font-size: 0.9rem; color: #fff; }
+
+/* İLETİŞİM */
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.contact-form { display: flex; flex-direction: column; gap: 15px; }
+.contact-form input, .contact-form textarea { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 15px; color: white; border-radius: 5px; font-family: 'Rajdhani'; font-size: 1rem; outline: none; transition: 0.3s; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--nvx-cyan); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+.btn-submit { background: var(--nvx-purple); color: white; padding: 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Orbitron'; }
+.btn-submit:hover { background: #d054ff; box-shadow: 0 0 15px var(--nvx-purple); }
+.contact-info { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+.info-item { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; color: #ccc; }
+.info-item i { color: var(--nvx-cyan); font-size: 1.5rem; }
+.social-links { display: flex; gap: 15px; margin-top: 20px; }
+.social-links a { width: 45px; height: 45px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; transition: 0.3s; text-decoration: none; }
+.social-links a:hover { background: var(--nvx-cyan); color: black; transform: translateY(-5px); }
 
 /* FOOTER */
-footer {
-    background-color: #050505;
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid #222;
-    margin-top: 50px;
+footer { background: #000; padding: 30px; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+.logo-small { font-family: 'Orbitron'; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+.logo-small span { color: var(--nvx-cyan); }
+footer p { color: #555; font-size: 0.9rem; }
+
+/* --- OYUN MODALI (Genel Kutu) --- */
+#game-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000;
+    display: none; flex-direction: column;
+}
+.btn-back {
+    position: absolute; top: 20px; left: 20px; background: transparent; border: 2px solid var(--nvx-cyan); color: var(--nvx-cyan);
+    padding: 10px 20px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; z-index: 2001; transition: 0.3s; display: flex; align-items: center; gap: 10px;
+}
+.btn-back:hover { background: var(--nvx-cyan); color: black; box-shadow: 0 0 20px var(--nvx-cyan); }
+.modal-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+
+/* --- OYUN YÜKLEME EKRANI (İÇ MODAL) --- */
+#game-loading-screen {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Atmosferik arka plan */
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    display: flex; flex-direction: column; 
+    align-items: center; justify-content: center;
+    z-index: 10;
+    transition: opacity 0.5s ease;
 }
 
-.socials {
-    margin-top: 10px;
+.modal-logo-anim {
+    width: auto; max-width: 250px; height: auto; max-height: 150px;
+    object-fit: contain; border-radius: 12px;
+    filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.6));
+    margin-bottom: 40px; animation: logoPulse 3s infinite ease-in-out;
 }
 
-.socials a {
-    color: white;
-    margin: 0 10px;
-    font-size: 1.2rem;
-    transition: color 0.3s;
+.modal-loader-bar {
+    width: 250px; height: 6px; background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px; overflow: hidden; margin-bottom: 15px;
+    border: 1px solid rgba(0, 243, 255, 0.2); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.socials a:hover {
-    color: #00d2ff;
+.modal-loader-progress {
+    width: 0%; height: 100%;
+    background: linear-gradient(90deg, var(--nvx-purple), var(--nvx-cyan));
+    box-shadow: 0 0 20px var(--nvx-cyan); transition: width 2s ease-in-out; border-radius: 10px;
+}
+
+.loading-text.small { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--nvx-cyan); letter-spacing: 3px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+
+/* --- ANİMASYON KEYFRAMES --- */
+@keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulseLogo { 0% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.05); filter: brightness(1.2); } 100% { transform: scale(1); filter: brightness(1); } }
+@keyframes plasmaPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+@keyframes logoPulse { 
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.6)); } 
+    50% { transform: scale(1.03); filter: drop-shadow(0 0 40px rgba(0, 243, 255, 0.9)) brightness(1.1); } 
+}
+
+/* --- RESPONSIVE (MOBİL UYUMLULUK) --- */
+@media (max-width: 768px) {
+    header { padding: 15px 20px; }
+    .hamburger { display: block; z-index: 1002; }
+    
+    .nav-menu {
+        position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+        background: rgba(0,0,0,0.95); flex-direction: column; justify-content: center;
+        transition: 0.4s ease; border-left: 1px solid #333; z-index: 1001;
+    }
+    .nav-menu.active { right: 0; }
+    .nav-menu ul { flex-direction: column; align-items: center; gap: 40px; }
+    .nav-menu a { font-size: 1.2rem; }
+    .desktop-only { display: none; }
+
+    .hero h1 { font-size: 2.5rem; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    section { padding: 60px 5%; }
+    .about-content { flex-direction: column; }
+    .contact-container { grid-template-columns: 1fr; }
 }
