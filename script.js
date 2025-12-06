@@ -67,7 +67,7 @@ function openGame(gameName) {
     let gameLogoUrl = '';
 
     if (gameName === 'HiddenOne') {
-        gameUrl = 'Games/HiddenOne.html';
+        gameUrl = 'games/hiddenone.html';
         gameLogoUrl = 'Resimler/HiddenOne.jpg'; // Oyunun kapak resmi
     } else if (gameName === 'TeamRoulette') {
         // İleride yapacağın diğer oyun
