@@ -583,9 +583,9 @@
         let isMixedMode = false;
         let isDoubleImpostor = false;
         
-        // SON SEÇİLEN KATEGORİ HAFIZASI (Hızlı Tekrar İçin)
+        // SON SEÇİLEN KATEGORİ HAFIZASI
         let activeMainKey = "";
-        let activeSubKey = null; // "YERLI", "YABANCI", "KARISIK" veya null
+        let activeSubKey = null;
         
         // --- FONKSİYONLAR ---
         function handleEnter(e) { if(e.key === 'Enter') addPlayer(); }
@@ -685,7 +685,19 @@
             Object.keys(subData).forEach(subKey => {
                 const btn = document.createElement('button');
                 btn.className = 'btn-cat btn-sub';
-                btn.innerHTML = subKey === "YERLI" ? '<i class="fas fa-flag"></i> YERLI' : '<i class="fas fa-globe"></i> YABANCI';
+                
+                // --- KESİN DÜZELTME BURADA ---
+                // Veritabanındaki "KEY" ne ise butonun üzerine onu yazıyoruz.
+                // Artık "YERLİ" / "YERLI" hatası olamaz.
+                let iconClass = "fas fa-globe"; // Varsayılan (Yabancı)
+                
+                // Eğer key "YER" ile başlıyorsa (YERLI, YERLİ) bayrak koy
+                if (subKey.startsWith("YER")) {
+                    iconClass = "fas fa-flag";
+                }
+                
+                btn.innerHTML = `<i class="${iconClass}"></i> ${subKey}`;
+                
                 btn.onclick = () => {
                     activeMainKey = mainKey;
                     activeSubKey = subKey;
@@ -719,7 +731,6 @@
             startGame(finalCatName, word);
         }
 
-        // --- YENİ FONKSİYON: AYNI KATEGORİDEN TEKRAR BAŞLAT ---
         function startSameCategoryGame() {
             const item = db[activeMainKey];
             let wordList = [];
@@ -727,18 +738,15 @@
 
             if (item.hasSub) {
                 if (activeSubKey === "KARISIK") {
-                    // Karışık modda her turda yeniden rastgele alt kategori seç
                     const subKeys = Object.keys(item.data);
                     const randomSub = subKeys[Math.floor(Math.random() * subKeys.length)];
                     wordList = item.data[randomSub];
                     displayCat += " (" + randomSub + ")";
                 } else {
-                    // Belirli alt kategori (Yerli/Yabancı)
                     wordList = item.data[activeSubKey];
                     displayCat += " (" + activeSubKey + ")";
                 }
             } else {
-                // Alt kategorisiz (Ülkeler vb.)
                 wordList = item.data;
             }
 
@@ -844,11 +852,7 @@
 
         function startNewRound() {
             if (isMixedMode) { startGlobalMixedGame(); }
-            else { 
-                // BURASI DEĞİŞTİ: Artık kategori seçimine dönmüyor, 
-                // hafızadaki kategoriden yeni kelime veriyor.
-                startSameCategoryGame(); 
-            }
+            else { startSameCategoryGame(); }
         }
         
         function resetGame() {
